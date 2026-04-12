@@ -1,0 +1,1260 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Tuhin Mitra — JavaScript Developer from Kolkata, India. 4+ years of experience in responsive web applications, WordPress, and n8n automation." />
+  <meta name="keywords" content="JavaScript Developer, Frontend Developer, WordPress Developer, n8n Automation, Kolkata, India" />
+  <meta name="author" content="Tuhin Mitra" />
+  <title>Tuhin Mitra — JavaScript Developer | Kolkata, India</title>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind Config -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Inter', 'sans-serif'] },
+          colors: {
+            background: '#030712',
+            surface: '#0f172a',
+            primary: '#6366f1',
+            secondary: '#a855f7'
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #030712;
+      color: #f8fafc;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: radial-gradient(circle at 50% 0%, #1e1b4b 0%, transparent 60%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #030712; }
+    ::-webkit-scrollbar-thumb { background: #6366f1; border-radius: 3px; }
+
+    /* Text Gradient */
+    .text-gradient {
+      background: linear-gradient(to right, #6366f1, #a855f7);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* Glass Panel */
+    .glass-panel {
+      background: rgba(15, 23, 42, 0.6);
+      backdrop-filter: blur(20px);
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Gradient Border Card */
+    .gradient-border {
+      position: relative;
+      background: rgba(15, 23, 42, 0.5);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .gradient-border:hover {
+      transform: translateY(-5px) scale(1.01);
+      border-color: rgba(99, 102, 241, 0.4);
+      box-shadow: 0 15px 30px -10px rgba(99, 102, 241, 0.2), 0 0 10px rgba(99, 102, 241, 0.1);
+    }
+    .gradient-border::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(99,102,241,0.2), rgba(168,85,247,0.1), rgba(255,255,255,0));
+      opacity: 0;
+      transition: opacity 0.4s ease;
+      pointer-events: none;
+    }
+    .gradient-border:hover::before { opacity: 1; }
+
+    /* Progress Bar Animation */
+    .progress-fill {
+      width: 0;
+      transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .progress-fill.animated { width: var(--target-width); }
+
+    /* Timeline */
+    .timeline-line {
+      position: absolute;
+      left: 20px;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: linear-gradient(to bottom, #6366f1, #a855f7, rgba(99,102,241,0.1));
+    }
+    @media (min-width: 768px) {
+      .timeline-line { left: 50%; transform: translateX(-50%); }
+    }
+    .timeline-dot {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: #6366f1;
+      border: 3px solid #030712;
+      position: absolute;
+      left: 14px;
+      top: 6px;
+      z-index: 2;
+      box-shadow: 0 0 10px rgba(99, 102, 241, 0.5);
+    }
+    @media (min-width: 768px) {
+      .timeline-dot { left: 50%; transform: translateX(-50%); }
+    }
+
+    /* Reveal Animation */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px) scale(0.98);
+      filter: blur(8px);
+      transition: all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+    .reveal.active {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      filter: blur(0);
+    }
+    .reveal.delay-1 { transition-delay: 0.1s; }
+    .reveal.delay-2 { transition-delay: 0.2s; }
+    .reveal.delay-3 { transition-delay: 0.3s; }
+    .reveal.delay-4 { transition-delay: 0.4s; }
+    .reveal.delay-5 { transition-delay: 0.5s; }
+    .reveal.delay-6 { transition-delay: 0.6s; }
+
+    /* Shimmer for hero text */
+    @keyframes textShimmer {
+      0% { background-position: 0% 50%; }
+      100% { background-position: 200% 50%; }
+    }
+    .text-shimmer {
+      background: linear-gradient(to right, #ffffff, #e2e8f0, #94a3b8, #ffffff);
+      background-size: 200% auto;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: textShimmer 4s linear infinite;
+    }
+
+    /* Float animation */
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+    .float { animation: float 6s ease-in-out infinite; }
+    .float-delayed { animation: float 7s ease-in-out infinite; animation-delay: 2s; }
+
+    /* Pulse glow */
+    @keyframes pulseGlow {
+      0%, 100% { opacity: 0.4; }
+      50% { opacity: 0.8; }
+    }
+    .pulse-glow { animation: pulseGlow 3s ease-in-out infinite; }
+
+    /* Form focus */
+    input:focus, textarea:focus {
+      outline: none;
+      border-color: rgba(99, 102, 241, 0.5);
+      box-shadow: 0 0 0 1px rgba(99, 102, 241, 0.2), 0 0 20px rgba(99, 102, 241, 0.1);
+    }
+
+    /* Nav link underline */
+    .nav-link { position: relative; }
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: linear-gradient(to right, #6366f1, #a855f7);
+      transition: width 0.3s ease;
+    }
+    .nav-link:hover::after,
+    .nav-link.active::after { width: 100%; }
+
+    /* Back to top */
+    .back-to-top {
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(20px);
+      transition: all 0.3s ease;
+    }
+    .back-to-top.visible {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    /* Mobile menu */
+    .mobile-menu {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .mobile-menu.open { max-height: 400px; }
+  </style>
+</head>
+
+<body class="relative">
+
+  <!-- ===================== NAVBAR ===================== -->
+  <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-500">
+    <div class="max-w-7xl mx-auto px-6 h-20 flex justify-between items-center">
+      <!-- Logo -->
+      <a href="#hero" class="text-lg font-semibold tracking-tight relative z-50">
+        <span class="text-gradient">TM</span>
+        <span class="text-slate-400 font-light ml-1 hidden sm:inline">/ dev</span>
+      </a>
+
+      <!-- Desktop Nav Links -->
+      <div class="hidden md:flex items-center gap-8">
+        <a href="#about" class="nav-link text-sm font-medium text-slate-400 hover:text-white transition-colors">About</a>
+        <a href="#skills" class="nav-link text-sm font-medium text-slate-400 hover:text-white transition-colors">Skills</a>
+        <a href="#experience" class="nav-link text-sm font-medium text-slate-400 hover:text-white transition-colors">Experience</a>
+        <a href="#projects" class="nav-link text-sm font-medium text-slate-400 hover:text-white transition-colors">Projects</a>
+        <a href="#contact" class="nav-link text-sm font-medium text-slate-400 hover:text-white transition-colors">Contact</a>
+        <a href="#contact" class="bg-white text-gray-950 text-sm font-semibold px-6 py-2.5 rounded-full hover:bg-slate-200 transition-colors shadow-lg shadow-white/5">
+          Hire Me
+        </a>
+      </div>
+
+      <!-- Mobile Hamburger -->
+      <button id="menuToggle" class="md:hidden relative z-50 w-10 h-10 flex flex-col items-center justify-center gap-1.5" aria-label="Toggle menu">
+        <span id="bar1" class="w-6 h-0.5 bg-white rounded transition-all duration-300"></span>
+        <span id="bar2" class="w-6 h-0.5 bg-white rounded transition-all duration-300"></span>
+        <span id="bar3" class="w-6 h-0.5 bg-white rounded transition-all duration-300"></span>
+      </button>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div id="mobileMenu" class="mobile-menu md:hidden glass-panel border-t border-white/10">
+      <div class="px-6 py-6 flex flex-col gap-4">
+        <a href="#about" class="mobile-link text-sm font-medium text-slate-400 hover:text-white transition-colors py-2">About</a>
+        <a href="#skills" class="mobile-link text-sm font-medium text-slate-400 hover:text-white transition-colors py-2">Skills</a>
+        <a href="#experience" class="mobile-link text-sm font-medium text-slate-400 hover:text-white transition-colors py-2">Experience</a>
+        <a href="#achievements" class="mobile-link text-sm font-medium text-slate-400 hover:text-white transition-colors py-2">Achievements</a>
+        <a href="#projects" class="mobile-link text-sm font-medium text-slate-400 hover:text-white transition-colors py-2">Projects</a>
+        <a href="#education" class="mobile-link text-sm font-medium text-slate-400 hover:text-white transition-colors py-2">Education</a>
+        <a href="#contact" class="mobile-link bg-white text-gray-950 text-sm font-semibold px-6 py-3 rounded-full text-center hover:bg-slate-200 transition-colors mt-2">
+          Hire Me
+        </a>
+      </div>
+    </div>
+  </nav>
+
+
+  <!-- ===================== HERO SECTION ===================== -->
+  <section id="hero" class="relative min-h-screen flex items-center pt-20">
+    <!-- Background Glows -->
+    <div class="absolute top-20 right-0 w-[500px] h-[500px] bg-indigo-600/20 rounded-full blur-[130px] pulse-glow pointer-events-none"></div>
+    <div class="absolute bottom-0 left-0 w-[400px] h-[400px] bg-purple-600/15 rounded-full blur-[120px] pulse-glow pointer-events-none" style="animation-delay: 1.5s;"></div>
+
+    <div class="max-w-7xl mx-auto px-6 w-full relative z-10">
+      <div class="grid lg:grid-cols-2 gap-16 items-center">
+        <!-- Left Content -->
+        <div class="order-2 lg:order-1">
+          <!-- Badge -->
+          <div class="reveal inline-flex items-center gap-2 bg-white/5 border border-white/10 rounded-full px-4 py-2 mb-8">
+            <span class="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></span>
+            <span class="text-xs font-medium text-slate-400 uppercase tracking-wider">Available for opportunities</span>
+          </div>
+
+          <!-- Heading -->
+          <h1 class="reveal delay-1 text-4xl lg:text-6xl font-semibold leading-[1.05] tracking-tight mb-6">
+            <span class="text-shimmer">Hi, I'm</span><br />
+            <span class="text-gradient">Tuhin Mitra</span>
+          </h1>
+
+          <!-- Title -->
+          <div class="reveal delay-2 flex flex-wrap items-center gap-3 mb-6">
+            <span class="text-xl lg:text-2xl font-light text-slate-300">JavaScript Developer</span>
+            <span class="text-slate-600">•</span>
+            <span class="text-sm text-slate-500 flex items-center gap-1.5">
+              <i data-lucide="map-pin" class="w-4 h-4"></i> Kolkata, India
+            </span>
+          </div>
+
+          <!-- Experience Badge -->
+          <div class="reveal delay-2 flex items-center gap-4 mb-8">
+            <div class="bg-indigo-500/10 border border-indigo-500/20 rounded-xl px-5 py-3">
+              <span class="text-2xl font-semibold text-indigo-400">4+</span>
+              <span class="text-xs text-slate-500 ml-1.5">Years Exp.</span>
+            </div>
+          </div>
+
+          <!-- Description -->
+          <p class="reveal delay-3 text-base text-slate-400 leading-relaxed max-w-lg mb-10">
+            JavaScript Developer specializing in responsive web applications, WordPress customization, automation workflows using n8n, and performance optimization.
+          </p>
+
+          <!-- CTA Buttons -->
+          <div class="reveal delay-4 flex flex-wrap gap-4">
+            <a href="#contact" class="bg-white text-gray-950 text-sm font-semibold px-8 py-3.5 rounded-full hover:bg-slate-200 transition-colors shadow-lg shadow-white/5 flex items-center gap-2">
+              <i data-lucide="send" class="w-4 h-4"></i> Hire Me
+            </a>
+            <a href="#" class="bg-white/5 border border-white/10 text-sm font-medium px-8 py-3.5 rounded-full hover:bg-white/10 transition-colors flex items-center gap-2 text-slate-300">
+              <i data-lucide="download" class="w-4 h-4"></i> Download CV
+            </a>
+            <a href="#" class="bg-white/5 border border-white/10 text-sm font-medium px-4 py-3.5 rounded-full hover:bg-white/10 transition-colors text-slate-300" title="GitHub">
+              <i data-lucide="github" class="w-4 h-4"></i>
+            </a>
+            <a href="#" class="bg-white/5 border border-white/10 text-sm font-medium px-4 py-3.5 rounded-full hover:bg-white/10 transition-colors text-slate-300" title="LinkedIn">
+              <i data-lucide="linkedin" class="w-4 h-4"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- Right Visual -->
+        <div class="order-1 lg:order-2 flex justify-center">
+          <div class="relative float">
+            <!-- Abstract Code Card -->
+            <div class="w-72 h-80 sm:w-80 sm:h-96 rounded-2xl overflow-hidden gradient-border border-0">
+              <div class="w-full h-full bg-surface/80 backdrop-blur-sm rounded-2xl p-6 flex flex-col">
+                <!-- Fake code header -->
+                <div class="flex items-center gap-2 mb-4">
+                  <div class="w-3 h-3 rounded-full bg-red-400/70"></div>
+                  <div class="w-3 h-3 rounded-full bg-yellow-400/70"></div>
+                  <div class="w-3 h-3 rounded-full bg-emerald-400/70"></div>
+                  <span class="text-[10px] text-slate-600 ml-2 font-mono">developer.js</span>
+                </div>
+                <!-- Fake code -->
+                <div class="font-mono text-xs sm:text-sm leading-6 flex-1">
+                  <p><span class="text-purple-400">const</span> <span class="text-blue-300">developer</span> = {</p>
+                  <p class="pl-4"><span class="text-emerald-400">name</span>: <span class="text-amber-300">"Tuhin Mitra"</span>,</p>
+                  <p class="pl-4"><span class="text-emerald-400">role</span>: <span class="text-amber-300">"JS Developer"</span>,</p>
+                  <p class="pl-4"><span class="text-emerald-400">experience</span>: <span class="text-indigo-300">4</span>,</p>
+                  <p class="pl-4"><span class="text-emerald-400">location</span>: <span class="text-amber-300">"Kolkata"</span>,</p>
+                  <p class="pl-4"><span class="text-emerald-400">passion</span>: <span class="text-amber-300">"Building Web"</span>,</p>
+                  <p>};</p>
+                  <p class="mt-2"><span class="text-purple-400">export default</span> <span class="text-blue-300">developer</span>;</p>
+                </div>
+                <!-- Cursor blink -->
+                <div class="mt-4 flex items-center gap-2">
+                  <span class="w-2 h-5 bg-indigo-400 animate-pulse"></span>
+                  <span class="text-[10px] text-slate-600">ready to code...</span>
+                </div>
+              </div>
+            </div>
+            <!-- Floating badges -->
+            <div class="absolute -top-4 -right-4 bg-indigo-500/20 border border-indigo-500/30 rounded-xl px-3 py-2 float-delayed backdrop-blur-sm">
+              <span class="text-xs font-medium text-indigo-300">⚡ n8n</span>
+            </div>
+            <div class="absolute -bottom-4 -left-4 bg-purple-500/20 border border-purple-500/30 rounded-xl px-3 py-2 float backdrop-blur-sm">
+              <span class="text-xs font-medium text-purple-300">🎨 WordPress</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Scroll Indicator -->
+      <div class="reveal delay-5 absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2">
+        <span class="text-[10px] text-slate-600 uppercase tracking-widest">Scroll</span>
+        <div class="w-5 h-8 border border-slate-700 rounded-full flex justify-center pt-1.5">
+          <div class="w-1 h-2 bg-slate-500 rounded-full animate-bounce"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ===================== ABOUT SECTION ===================== -->
+  <section id="about" class="relative py-24 lg:py-32">
+    <div class="max-w-7xl mx-auto px-6">
+      <!-- Section Header -->
+      <div class="text-center mb-16">
+        <span class="reveal text-[11px] font-semibold uppercase tracking-wider text-indigo-400 mb-4 block">Get to know me</span>
+        <h2 class="reveal delay-1 text-3xl font-semibold tracking-tight">About <span class="text-gradient">Me</span></h2>
+      </div>
+
+      <div class="grid lg:grid-cols-5 gap-12 items-start">
+        <!-- Left: Summary -->
+        <div class="lg:col-span-3">
+          <p class="reveal text-slate-400 leading-relaxed text-base mb-8">
+            Frontend-focused JavaScript developer with experience building responsive business websites, WordPress solutions, reusable UI components, and automation workflows using n8n. I thrive on turning complex requirements into clean, performant, and user-friendly interfaces.
+          </p>
+          <p class="reveal delay-1 text-slate-400 leading-relaxed text-base mb-10">
+            Over the past 4+ years, I've worked with multiple agencies and clients across India, delivering production-ready websites that are fast, accessible, and visually polished. I'm constantly learning and pushing myself to adopt modern tools and workflows.
+          </p>
+
+          <!-- Quick Info -->
+          <div class="reveal delay-2 grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-lg bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center">
+                <i data-lucide="map-pin" class="w-4 h-4 text-indigo-400"></i>
+              </div>
+              <div>
+                <p class="text-xs text-slate-500">Location</p>
+                <p class="text-sm text-slate-300">Kolkata, India</p>
+              </div>
+            </div>
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-lg bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center">
+                <i data-lucide="briefcase" class="w-4 h-4 text-indigo-400"></i>
+              </div>
+              <div>
+                <p class="text-xs text-slate-500">Experience</p>
+                <p class="text-sm text-slate-300">4+ Years</p>
+              </div>
+            </div>
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-lg bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center">
+                <i data-lucide="code-2" class="w-4 h-4 text-indigo-400"></i>
+              </div>
+              <div>
+                <p class="text-xs text-slate-500">Focus</p>
+                <p class="text-sm text-slate-300">Frontend / JavaScript</p>
+              </div>
+            </div>
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-lg bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center">
+                <i data-lucide="globe" class="w-4 h-4 text-indigo-400"></i>
+              </div>
+              <div>
+                <p class="text-xs text-slate-500">Availability</p>
+                <p class="text-sm text-emerald-400">Open to work</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Strengths -->
+        <div class="lg:col-span-2">
+          <div class="gradient-border rounded-2xl p-7">
+            <h3 class="text-sm font-semibold uppercase tracking-wider text-slate-300 mb-6 flex items-center gap-2">
+              <i data-lucide="zap" class="w-4 h-4 text-indigo-400"></i> Core Strengths
+            </h3>
+            <ul class="space-y-4">
+              <li class="reveal flex items-start gap-3">
+                <span class="mt-1 w-1.5 h-1.5 rounded-full bg-indigo-400 shrink-0"></span>
+                <span class="text-sm text-slate-400">Responsive UI Development</span>
+              </li>
+              <li class="reveal delay-1 flex items-start gap-3">
+                <span class="mt-1 w-1.5 h-1.5 rounded-full bg-purple-400 shrink-0"></span>
+                <span class="text-sm text-slate-400">Performance Optimization</span>
+              </li>
+              <li class="reveal delay-2 flex items-start gap-3">
+                <span class="mt-1 w-1.5 h-1.5 rounded-full bg-indigo-400 shrink-0"></span>
+                <span class="text-sm text-slate-400">API Integration</span>
+              </li>
+              <li class="reveal delay-3 flex items-start gap-3">
+                <span class="mt-1 w-1.5 h-1.5 rounded-full bg-purple-400 shrink-0"></span>
+                <span class="text-sm text-slate-400">Workflow Automation</span>
+              </li>
+              <li class="reveal delay-4 flex items-start gap-3">
+                <span class="mt-1 w-1.5 h-1.5 rounded-full bg-indigo-400 shrink-0"></span>
+                <span class="text-sm text-slate-400">Client Website Development</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ===================== SKILLS SECTION ===================== -->
+  <section id="skills" class="relative py-24 lg:py-32">
+    <!-- Background glow -->
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-indigo-600/10 rounded-full blur-[130px] pointer-events-none"></div>
+
+    <div class="max-w-7xl mx-auto px-6 relative z-10">
+      <!-- Section Header -->
+      <div class="text-center mb-16">
+        <span class="reveal text-[11px] font-semibold uppercase tracking-wider text-indigo-400 mb-4 block">What I work with</span>
+        <h2 class="reveal delay-1 text-3xl font-semibold tracking-tight">Skills & <span class="text-gradient">Tools</span></h2>
+      </div>
+
+      <div class="grid lg:grid-cols-2 gap-12">
+        <!-- Technical Skills with Progress Bars -->
+        <div class="gradient-border rounded-2xl p-7">
+          <h3 class="reveal text-sm font-semibold uppercase tracking-wider text-slate-300 mb-8 flex items-center gap-2">
+            <i data-lucide="code" class="w-4 h-4 text-indigo-400"></i> Technical Skills
+          </h3>
+          <div class="space-y-6">
+            <!-- JavaScript -->
+            <div class="reveal">
+              <div class="flex justify-between items-center mb-2">
+                <span class="text-sm text-slate-300 font-medium">JavaScript</span>
+                <span class="text-xs text-slate-500">90%</span>
+              </div>
+              <div class="w-full h-2 bg-white/5 rounded-full overflow-hidden">
+                <div class="progress-fill h-full rounded-full bg-gradient-to-r from-indigo-500 to-purple-500" style="--target-width: 90%;"></div>
+              </div>
+            </div>
+            <!-- HTML5 -->
+            <div class="reveal delay-1">
+              <div class="flex justify-between items-center mb-2">
+                <span class="text-sm text-slate-300 font-medium">HTML5</span>
+                <span class="text-xs text-slate-500">95%</span>
+              </div>
+              <div class="w-full h-2 bg-white/5 rounded-full overflow-hidden">
+                <div class="progress-fill h-full rounded-full bg-gradient-to-r from-indigo-500 to-purple-500" style="--target-width: 95%;"></div>
+              </div>
+            </div>
+            <!-- CSS3 -->
+            <div class="reveal delay-2">
+              <div class="flex justify-between items-center mb-2">
+                <span class="text-sm text-slate-300 font-medium">CSS3</span>
+                <span class="text-xs text-slate-500">90%</span>
+              </div>
+              <div class="w-full h-2 bg-white/5 rounded-full overflow-hidden">
+                <div class="progress-fill h-full rounded-full bg-gradient-to-r from-indigo-500 to-purple-500" style="--target-width: 90%;"></div>
+              </div>
+            </div>
+            <!-- Tailwind CSS -->
+            <div class="reveal delay-3">
+              <div class="flex justify-between items-center mb-2">
+                <span class="text-sm text-slate-300 font-medium">Tailwind CSS</span>
+                <span class="text-xs text-slate-500">85%</span>
+              </div>
+              <div class="w-full h-2 bg-white/5 rounded-full overflow-hidden">
+                <div class="progress-fill h-full rounded-full bg-gradient-to-r from-indigo-500 to-purple-500" style="--target-width: 85%;"></div>
+              </div>
+            </div>
+            <!-- WordPress -->
+            <div class="reveal delay-4">
+              <div class="flex justify-between items-center mb-2">
+                <span class="text-sm text-slate-300 font-medium">WordPress</span>
+                <span class="text-xs text-slate-500">88%</span>
+              </div>
+              <div class="w-full h-2 bg-white/5 rounded-full overflow-hidden">
+                <div class="progress-fill h-full rounded-full bg-gradient-to-r from-indigo-500 to-purple-500" style="--target-width: 88%;"></div>
+              </div>
+            </div>
+            <!-- REST API -->
+            <div class="reveal delay-5">
+              <div class="flex justify-between items-center mb-2">
+                <span class="text-sm text-slate-300 font-medium">REST API Integration</span>
+                <span class="text-xs text-slate-500">80%</span>
+              </div>
+              <div class="w-full h-2 bg-white/5 rounded-full overflow-hidden">
+                <div class="progress-fill h-full rounded-full bg-gradient-to-r from-indigo-500 to-purple-500" style="--target-width: 80%;"></div>
+              </div>
+            </div>
+            <!-- n8n -->
+            <div class="reveal delay-6">
+              <div class="flex justify-between items-center mb-2">
+                <span class="text-sm text-slate-300 font-medium">n8n Automation</span>
+                <span class="text-xs text-slate-500">75%</span>
+              </div>
+              <div class="w-full h-2 bg-white/5 rounded-full overflow-hidden">
+                <div class="progress-fill h-full rounded-full bg-gradient-to-r from-indigo-500 to-purple-500" style="--target-width: 75%;"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tools Grid -->
+        <div>
+          <h3 class="reveal text-sm font-semibold uppercase tracking-wider text-slate-300 mb-8 flex items-center gap-2">
+            <i data-lucide="wrench" class="w-4 h-4 text-indigo-400"></i> Tools & Platforms
+          </h3>
+          <div class="grid grid-cols-2 gap-4">
+            <!-- VS Code -->
+            <div class="reveal gradient-border rounded-xl p-5 flex flex-col items-center text-center gap-3">
+              <div class="w-12 h-12 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center">
+                <i data-lucide="file-code-2" class="w-6 h-6 text-blue-400"></i>
+              </div>
+              <span class="text-sm font-medium text-slate-300">VS Code</span>
+            </div>
+            <!-- Git -->
+            <div class="reveal delay-1 gradient-border rounded-xl p-5 flex flex-col items-center text-center gap-3">
+              <div class="w-12 h-12 rounded-xl bg-orange-500/10 border border-orange-500/20 flex items-center justify-center">
+                <i data-lucide="git-branch" class="w-6 h-6 text-orange-400"></i>
+              </div>
+              <span class="text-sm font-medium text-slate-300">Git</span>
+            </div>
+            <!-- Elementor -->
+            <div class="reveal delay-2 gradient-border rounded-xl p-5 flex flex-col items-center text-center gap-3">
+              <div class="w-12 h-12 rounded-xl bg-pink-500/10 border border-pink-500/20 flex items-center justify-center">
+                <i data-lucide="layout" class="w-6 h-6 text-pink-400"></i>
+              </div>
+              <span class="text-sm font-medium text-slate-300">Elementor</span>
+            </div>
+            <!-- Chrome DevTools -->
+            <div class="reveal delay-3 gradient-border rounded-xl p-5 flex flex-col items-center text-center gap-3">
+              <div class="w-12 h-12 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center">
+                <i data-lucide="search" class="w-6 h-6 text-emerald-400"></i>
+              </div>
+              <span class="text-sm font-medium text-slate-300">DevTools</span>
+            </div>
+          </div>
+
+          <!-- Extra Skill Tags -->
+          <div class="reveal delay-4 mt-8 gradient-border rounded-xl p-6">
+            <h4 class="text-xs font-semibold uppercase tracking-wider text-slate-500 mb-4">Also familiar with</h4>
+            <div class="flex flex-wrap gap-2">
+              <span class="text-xs bg-white/5 border border-white/10 text-slate-400 px-3 py-1.5 rounded-full">React Basics</span>
+              <span class="text-xs bg-white/5 border border-white/10 text-slate-400 px-3 py-1.5 rounded-full">PHP</span>
+              <span class="text-xs bg-white/5 border border-white/10 text-slate-400 px-3 py-1.5 rounded-full">MySQL</span>
+              <span class="text-xs bg-white/5 border border-white/10 text-slate-400 px-3 py-1.5 rounded-full">Figma</span>
+              <span class="text-xs bg-white/5 border border-white/10 text-slate-400 px-3 py-1.5 rounded-full">cPanel</span>
+              <span class="text-xs bg-white/5 border border-white/10 text-slate-400 px-3 py-1.5 rounded-full">SEO</span>
+              <span class="text-xs bg-white/5 border border-white/10 text-slate-400 px-3 py-1.5 rounded-full">Responsive Design</span>
+              <span class="text-xs bg-white/5 border border-white/10 text-slate-400 px-3 py-1.5 rounded-full">Webpack</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ===================== EXPERIENCE SECTION ===================== -->
+  <section id="experience" class="relative py-24 lg:py-32">
+    <div class="max-w-7xl mx-auto px-6">
+      <!-- Section Header -->
+      <div class="text-center mb-16">
+        <span class="reveal text-[11px] font-semibold uppercase tracking-wider text-indigo-400 mb-4 block">Where I've worked</span>
+        <h2 class="reveal delay-1 text-3xl font-semibold tracking-tight">Professional <span class="text-gradient">Experience</span></h2>
+      </div>
+
+      <!-- Timeline -->
+      <div class="relative max-w-4xl mx-auto">
+        <div class="timeline-line"></div>
+
+        <!-- Role 1 -->
+        <div class="reveal relative pl-12 md:pl-0 pb-12 md:grid md:grid-cols-2 md:gap-12">
+          <div class="timeline-dot"></div>
+          <div class="md:text-right md:pr-12">
+            <span class="text-xs font-medium text-indigo-400 bg-indigo-500/10 border border-indigo-500/20 px-3 py-1 rounded-full">Feb 2026 — Present</span>
+          </div>
+          <div class="md:pl-12 mt-4 md:mt-0">
+            <div class="gradient-border rounded-xl p-6">
+              <h3 class="text-base font-medium text-white mb-1">Website Developer</h3>
+              <p class="text-sm text-indigo-400 mb-3">Teknowledge Analytic Services Pvt Ltd</p>
+              <p class="text-sm text-slate-500 leading-relaxed">Leading frontend development for client projects with a focus on responsive design and performance.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Role 2 -->
+        <div class="reveal delay-1 relative pl-12 md:pl-0 pb-12 md:grid md:grid-cols-2 md:gap-12">
+          <div class="timeline-dot"></div>
+          <div class="md:text-right md:pr-12">
+            <span class="text-xs font-medium text-purple-400 bg-purple-500/10 border border-purple-500/20 px-3 py-1 rounded-full">Nov 2024 — Jan 2026</span>
+          </div>
+          <div class="md:pl-12 mt-4 md:mt-0">
+            <div class="gradient-border rounded-xl p-6">
+              <h3 class="text-base font-medium text-white mb-1">Web Developer</h3>
+              <p class="text-sm text-indigo-400 mb-3">Woncomp Tech Solutions Pvt Ltd</p>
+              <p class="text-sm text-slate-500 leading-relaxed">Built and maintained multiple client websites using WordPress, JavaScript, and custom themes.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Role 3 -->
+        <div class="reveal delay-2 relative pl-12 md:pl-0 pb-12 md:grid md:grid-cols-2 md:gap-12">
+          <div class="timeline-dot"></div>
+          <div class="md:text-right md:pr-12">
+            <span class="text-xs font-medium text-indigo-400 bg-indigo-500/10 border border-indigo-500/20 px-3 py-1 rounded-full">Jan 2022 — Oct 2024</span>
+          </div>
+          <div class="md:pl-12 mt-4 md:mt-0">
+            <div class="gradient-border rounded-xl p-6">
+              <h3 class="text-base font-medium text-white mb-1">Frontend Web Developer</h3>
+              <p class="text-sm text-indigo-400 mb-3">Drodift LLP</p>
+              <p class="text-sm text-slate-500 leading-relaxed">Developed responsive UIs, integrated REST APIs, and built reusable component libraries for web applications.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Role 4 -->
+        <div class="reveal delay-3 relative pl-12 md:pl-0 md:grid md:grid-cols-2 md:gap-12">
+          <div class="timeline-dot"></div>
+          <div class="md:text-right md:pr-12">
+            <span class="text-xs font-medium text-purple-400 bg-purple-500/10 border border-purple-500/20 px-3 py-1 rounded-full">Jul 2018 — Mar 2019</span>
+          </div>
+          <div class="md:pl-12 mt-4 md:mt-0">
+            <div class="gradient-border rounded-xl p-6">
+              <h3 class="text-base font-medium text-white mb-1">Web Developer Trainee</h3>
+              <p class="text-sm text-indigo-400 mb-3">Task Venturers</p>
+              <p class="text-sm text-slate-500 leading-relaxed">Started professional journey learning HTML, CSS, JavaScript, and foundational web development practices.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ===================== ACHIEVEMENTS SECTION ===================== -->
+  <section id="achievements" class="relative py-24 lg:py-32">
+    <div class="absolute top-0 right-0 w-[400px] h-[400px] bg-purple-600/10 rounded-full blur-[120px] pointer-events-none"></div>
+
+    <div class="max-w-7xl mx-auto px-6 relative z-10">
+      <!-- Section Header -->
+      <div class="text-center mb-16">
+        <span class="reveal text-[11px] font-semibold uppercase tracking-wider text-indigo-400 mb-4 block">What I've accomplished</span>
+        <h2 class="reveal delay-1 text-3xl font-semibold tracking-tight">Key <span class="text-gradient">Achievements</span></h2>
+      </div>
+
+      <!-- Achievement Cards -->
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <!-- Card 1 -->
+        <div class="reveal gradient-border rounded-2xl p-7 text-center">
+          <div class="w-14 h-14 rounded-2xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center mx-auto mb-5">
+            <i data-lucide="monitor-check" class="w-7 h-7 text-indigo-400"></i>
+          </div>
+          <h3 class="text-sm font-medium text-white mb-2">Responsive Websites</h3>
+          <p class="text-xs text-slate-500 leading-relaxed">Delivered multiple responsive business websites for diverse clients and industries.</p>
+        </div>
+        <!-- Card 2 -->
+        <div class="reveal delay-1 gradient-border rounded-2xl p-7 text-center">
+          <div class="w-14 h-14 rounded-2xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center mx-auto mb-5">
+            <i data-lucide="gauge" class="w-7 h-7 text-purple-400"></i>
+          </div>
+          <h3 class="text-sm font-medium text-white mb-2">Performance Gains</h3>
+          <p class="text-xs text-slate-500 leading-relaxed">Improved frontend performance across client projects with optimization techniques.</p>
+        </div>
+        <!-- Card 3 -->
+        <div class="reveal delay-2 gradient-border rounded-2xl p-7 text-center">
+          <div class="w-14 h-14 rounded-2xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center mx-auto mb-5">
+            <i data-lucide="blocks" class="w-7 h-7 text-indigo-400"></i>
+          </div>
+          <h3 class="text-sm font-medium text-white mb-2">Reusable Components</h3>
+          <p class="text-xs text-slate-500 leading-relaxed">Built reusable UI component libraries that accelerated development timelines.</p>
+        </div>
+        <!-- Card 4 -->
+        <div class="reveal delay-3 gradient-border rounded-2xl p-7 text-center">
+          <div class="w-14 h-14 rounded-2xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center mx-auto mb-5">
+            <i data-lucide="workflow" class="w-7 h-7 text-purple-400"></i>
+          </div>
+          <h3 class="text-sm font-medium text-white mb-2">Automation Workflows</h3>
+          <p class="text-xs text-slate-500 leading-relaxed">Implemented automation workflows using n8n to streamline business processes.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ===================== PROJECTS SECTION ===================== -->
+  <section id="projects" class="relative py-24 lg:py-32">
+    <div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-[500px] h-[500px] bg-indigo-600/10 rounded-full blur-[130px] pointer-events-none"></div>
+
+    <div class="max-w-7xl mx-auto px-6 relative z-10">
+      <!-- Section Header -->
+      <div class="text-center mb-16">
+        <span class="reveal text-[11px] font-semibold uppercase tracking-wider text-indigo-400 mb-4 block">Selected work</span>
+        <h2 class="reveal delay-1 text-3xl font-semibold tracking-tight">Featured <span class="text-gradient">Projects</span></h2>
+      </div>
+
+      <!-- Projects Grid -->
+      <div class="grid md:grid-cols-2 gap-8">
+
+        <!-- Project 1 -->
+        <div class="reveal gradient-border rounded-2xl overflow-hidden group">
+          <div class="relative h-52 overflow-hidden">
+            <img src="https://picsum.photos/seed/tuhin-project1/800/400.jpg" alt="Business Website Project" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" loading="lazy" />
+            <div class="absolute inset-0 bg-gradient-to-t from-surface via-surface/50 to-transparent"></div>
+            <div class="absolute top-4 right-4 flex gap-2">
+              <a href="#" class="w-9 h-9 rounded-lg bg-black/50 backdrop-blur-sm border border-white/10 flex items-center justify-center hover:bg-indigo-500/30 transition-colors" title="Live Demo">
+                <i data-lucide="external-link" class="w-4 h-4 text-white"></i>
+              </a>
+              <a href="#" class="w-9 h-9 rounded-lg bg-black/50 backdrop-blur-sm border border-white/10 flex items-center justify-center hover:bg-indigo-500/30 transition-colors" title="GitHub">
+                <i data-lucide="github" class="w-4 h-4 text-white"></i>
+              </a>
+            </div>
+          </div>
+          <div class="p-7">
+            <h3 class="text-base font-medium text-white mb-2">Business Corporate Website</h3>
+            <p class="text-sm text-slate-500 leading-relaxed mb-4">A fully responsive corporate website with modern design, smooth animations, and optimized for search engines.</p>
+            <div class="flex flex-wrap gap-2">
+              <span class="text-[11px] bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 px-2.5 py-1 rounded-full">JavaScript</span>
+              <span class="text-[11px] bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 px-2.5 py-1 rounded-full">Tailwind CSS</span>
+              <span class="text-[11px] bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 px-2.5 py-1 rounded-full">WordPress</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Project 2 -->
+        <div class="reveal delay-1 gradient-border rounded-2xl overflow-hidden group">
+          <div class="relative h-52 overflow-hidden">
+            <img src="https://picsum.photos/seed/tuhin-project2/800/400.jpg" alt="Automation Dashboard Project" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" loading="lazy" />
+            <div class="absolute inset-0 bg-gradient-to-t from-surface via-surface/50 to-transparent"></div>
+            <div class="absolute top-4 right-4 flex gap-2">
+              <a href="#" class="w-9 h-9 rounded-lg bg-black/50 backdrop-blur-sm border border-white/10 flex items-center justify-center hover:bg-indigo-500/30 transition-colors" title="Live Demo">
+                <i data-lucide="external-link" class="w-4 h-4 text-white"></i>
+              </a>
+              <a href="#" class="w-9 h-9 rounded-lg bg-black/50 backdrop-blur-sm border border-white/10 flex items-center justify-center hover:bg-indigo-500/30 transition-colors" title="GitHub">
+                <i data-lucide="github" class="w-4 h-4 text-white"></i>
+              </a>
+            </div>
+          </div>
+          <div class="p-7">
+            <h3 class="text-base font-medium text-white mb-2">n8n Automation Dashboard</h3>
+            <p class="text-sm text-slate-500 leading-relaxed mb-4">Custom dashboard interface for monitoring and managing n8n automation workflows with real-time status updates.</p>
+            <div class="flex flex-wrap gap-2">
+              <span class="text-[11px] bg-purple-500/10 border border-purple-500/20 text-purple-400 px-2.5 py-1 rounded-full">n8n</span>
+              <span class="text-[11px] bg-purple-500/10 border border-purple-500/20 text-purple-400 px-2.5 py-1 rounded-full">REST API</span>
+              <span class="text-[11px] bg-purple-500/10 border border-purple-500/20 text-purple-400 px-2.5 py-1 rounded-full">JavaScript</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Project 3 -->
+        <div class="reveal delay-2 gradient-border rounded-2xl overflow-hidden group">
+          <div class="relative h-52 overflow-hidden">
+            <img src="https://picsum.photos/seed/tuhin-project3/800/400.jpg" alt="E-commerce Website Project" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" loading="lazy" />
+            <div class="absolute inset-0 bg-gradient-to-t from-surface via-surface/50 to-transparent"></div>
+            <div class="absolute top-4 right-4 flex gap-2">
+              <a href="#" class="w-9 h-9 rounded-lg bg-black/50 backdrop-blur-sm border border-white/10 flex items-center justify-center hover:bg-indigo-500/30 transition-colors" title="Live Demo">
+                <i data-lucide="external-link" class="w-4 h-4 text-white"></i>
+              </a>
+              <a href="#" class="w-9 h-9 rounded-lg bg-black/50 backdrop-blur-sm border border-white/10 flex items-center justify-center hover:bg-indigo-500/30 transition-colors" title="GitHub">
+                <i data-lucide="github" class="w-4 h-4 text-white"></i>
+              </a>
+            </div>
+          </div>
+          <div class="p-7">
+            <h3 class="text-base font-medium text-white mb-2">E-commerce Product Page</h3>
+            <p class="text-sm text-slate-500 leading-relaxed mb-4">High-converting product landing page with dynamic cart functionality, image galleries, and fast load times.</p>
+            <div class="flex flex-wrap gap-2">
+              <span class="text-[11px] bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 px-2.5 py-1 rounded-full">HTML5</span>
+              <span class="text-[11px] bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 px-2.5 py-1 rounded-full">CSS3</span>
+              <span class="text-[11px] bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 px-2.5 py-1 rounded-full">JavaScript</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Project 4 -->
+        <div class="reveal delay-3 gradient-border rounded-2xl overflow-hidden group">
+          <div class="relative h-52 overflow-hidden">
+            <img src="https://picsum.photos/seed/tuhin-project4/800/400.jpg" alt="WordPress Theme Project" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" loading="lazy" />
+            <div class="absolute inset-0 bg-gradient-to-t from-surface via-surface/50 to-transparent"></div>
+            <div class="absolute top-4 right-4 flex gap-2">
+              <a href="#" class="w-9 h-9 rounded-lg bg-black/50 backdrop-blur-sm border border-white/10 flex items-center justify-center hover:bg-indigo-500/30 transition-colors" title="Live Demo">
+                <i data-lucide="external-link" class="w-4 h-4 text-white"></i>
+              </a>
+              <a href="#" class="w-9 h-9 rounded-lg bg-black/50 backdrop-blur-sm border border-white/10 flex items-center justify-center hover:bg-indigo-500/30 transition-colors" title="GitHub">
+                <i data-lucide="github" class="w-4 h-4 text-white"></i>
+              </a>
+            </div>
+          </div>
+          <div class="p-7">
+            <h3 class="text-base font-medium text-white mb-2">Custom WordPress Theme</h3>
+            <p class="text-sm text-slate-500 leading-relaxed mb-4">A lightweight, customizable WordPress theme built from scratch with Elementor compatibility and SEO best practices.</p>
+            <div class="flex flex-wrap gap-2">
+              <span class="text-[11px] bg-purple-500/10 border border-purple-500/20 text-purple-400 px-2.5 py-1 rounded-full">WordPress</span>
+              <span class="text-[11px] bg-purple-500/10 border border-purple-500/20 text-purple-400 px-2.5 py-1 rounded-full">Elementor</span>
+              <span class="text-[11px] bg-purple-500/10 border border-purple-500/20 text-purple-400 px-2.5 py-1 rounded-full">PHP</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ===================== EDUCATION SECTION ===================== -->
+  <section id="education" class="relative py-24 lg:py-32">
+    <div class="max-w-7xl mx-auto px-6">
+      <!-- Section Header -->
+      <div class="text-center mb-16">
+        <span class="reveal text-[11px] font-semibold uppercase tracking-wider text-indigo-400 mb-4 block">Academic background</span>
+        <h2 class="reveal delay-1 text-3xl font-semibold tracking-tight">Education</h2>
+      </div>
+
+      <div class="max-w-2xl mx-auto">
+        <div class="reveal gradient-border rounded-2xl p-8 flex flex-col sm:flex-row items-start gap-6">
+          <div class="w-16 h-16 rounded-2xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center shrink-0">
+            <i data-lucide="graduation-cap" class="w-8 h-8 text-indigo-400"></i>
+          </div>
+          <div>
+            <span class="text-xs font-medium text-indigo-400 bg-indigo-500/10 border border-indigo-500/20 px-3 py-1 rounded-full">2015</span>
+            <h3 class="text-base font-medium text-white mt-3 mb-1">Bachelor of Technology (B.Tech)</h3>
+            <p class="text-sm text-slate-400 mb-1">Computer Science and Engineering</p>
+            <p class="text-sm text-slate-500">MAKAUT University, West Bengal</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ===================== CERTIFICATIONS SECTION ===================== -->
+  <section id="certifications" class="relative py-24 lg:py-32">
+    <div class="max-w-7xl mx-auto px-6">
+      <!-- Section Header -->
+      <div class="text-center mb-16">
+        <span class="reveal text-[11px] font-semibold uppercase tracking-wider text-indigo-400 mb-4 block">Credentials</span>
+        <h2 class="reveal delay-1 text-3xl font-semibold tracking-tight">Certifications</h2>
+      </div>
+
+      <div class="max-w-2xl mx-auto">
+        <div class="reveal gradient-border rounded-2xl p-8 flex flex-col sm:flex-row items-start gap-6">
+          <div class="w-16 h-16 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center shrink-0">
+            <i data-lucide="award" class="w-8 h-8 text-emerald-400"></i>
+          </div>
+          <div>
+            <span class="text-xs font-medium text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-3 py-1 rounded-full">NSDC Certified</span>
+            <h3 class="text-base font-medium text-white mt-3 mb-1">Programming with PHP & MySQL</h3>
+            <p class="text-sm text-slate-500">National Skill Development Corporation — Certified proficiency in PHP programming and MySQL database management.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ===================== CONTACT SECTION ===================== -->
+  <section id="contact" class="relative py-24 lg:py-32">
+    <div class="absolute top-0 left-0 w-[400px] h-[400px] bg-indigo-600/15 rounded-full blur-[120px] pointer-events-none"></div>
+    <div class="absolute bottom-0 right-0 w-[300px] h-[300px] bg-purple-600/10 rounded-full blur-[100px] pointer-events-none"></div>
+
+    <div class="max-w-7xl mx-auto px-6 relative z-10">
+      <!-- Section Header -->
+      <div class="text-center mb-16">
+        <span class="reveal text-[11px] font-semibold uppercase tracking-wider text-indigo-400 mb-4 block">Let's connect</span>
+        <h2 class="reveal delay-1 text-3xl font-semibold tracking-tight">Get In <span class="text-gradient">Touch</span></h2>
+        <p class="reveal delay-2 text-sm text-slate-500 mt-4 max-w-md mx-auto">Have a project in mind or want to discuss opportunities? I'd love to hear from you.</p>
+      </div>
+
+      <div class="grid lg:grid-cols-5 gap-12 max-w-5xl mx-auto">
+        <!-- Contact Info -->
+        <div class="lg:col-span-2 space-y-6">
+          <!-- Phone -->
+          <div class="reveal gradient-border rounded-xl p-5 flex items-center gap-4">
+            <div class="w-11 h-11 rounded-xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center shrink-0">
+              <i data-lucide="phone" class="w-5 h-5 text-indigo-400"></i>
+            </div>
+            <div>
+              <p class="text-xs text-slate-500 mb-0.5">Phone</p>
+              <a href="tel:+91XXXXXXXXXX" class="text-sm text-slate-300 hover:text-indigo-400 transition-colors">+91 XXXXXXXXXX</a>
+            </div>
+          </div>
+          <!-- Email -->
+          <div class="reveal delay-1 gradient-border rounded-xl p-5 flex items-center gap-4">
+            <div class="w-11 h-11 rounded-xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center shrink-0">
+              <i data-lucide="mail" class="w-5 h-5 text-purple-400"></i>
+            </div>
+            <div>
+              <p class="text-xs text-slate-500 mb-0.5">Email</p>
+              <a href="mailto:tuhin.mitra@example.com" class="text-sm text-slate-300 hover:text-indigo-400 transition-colors">tuhin.mitra@example.com</a>
+            </div>
+          </div>
+          <!-- Location -->
+          <div class="reveal delay-2 gradient-border rounded-xl p-5 flex items-center gap-4">
+            <div class="w-11 h-11 rounded-xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center shrink-0">
+              <i data-lucide="map-pin" class="w-5 h-5 text-indigo-400"></i>
+            </div>
+            <div>
+              <p class="text-xs text-slate-500 mb-0.5">Location</p>
+              <p class="text-sm text-slate-300">Kolkata, West Bengal, India</p>
+            </div>
+          </div>
+
+          <!-- Social Links -->
+          <div class="reveal delay-3 flex gap-3 pt-4">
+            <a href="#" class="w-11 h-11 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center hover:bg-indigo-500/10 hover:border-indigo-500/20 transition-all" title="GitHub">
+              <i data-lucide="github" class="w-5 h-5 text-slate-400"></i>
+            </a>
+            <a href="#" class="w-11 h-11 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center hover:bg-indigo-500/10 hover:border-indigo-500/20 transition-all" title="LinkedIn">
+              <i data-lucide="linkedin" class="w-5 h-5 text-slate-400"></i>
+            </a>
+            <a href="#" class="w-11 h-11 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center hover:bg-indigo-500/10 hover:border-indigo-500/20 transition-all" title="Twitter">
+              <i data-lucide="twitter" class="w-5 h-5 text-slate-400"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- Contact Form -->
+        <div class="lg:col-span-3">
+          <form id="contactForm" class="reveal delay-1 gradient-border rounded-2xl p-8 space-y-5">
+            <div class="grid sm:grid-cols-2 gap-5">
+              <div>
+                <label for="name" class="text-xs font-medium text-slate-400 mb-2 block">Full Name</label>
+                <input type="text" id="name" name="name" required placeholder="John Doe"
+                  class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm text-slate-200 placeholder-slate-600 transition-all" />
+              </div>
+              <div>
+                <label for="email" class="text-xs font-medium text-slate-400 mb-2 block">Email Address</label>
+                <input type="email" id="email" name="email" required placeholder="john@example.com"
+                  class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm text-slate-200 placeholder-slate-600 transition-all" />
+              </div>
+            </div>
+            <div>
+              <label for="subject" class="text-xs font-medium text-slate-400 mb-2 block">Subject</label>
+              <input type="text" id="subject" name="subject" required placeholder="Project Discussion"
+                class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm text-slate-200 placeholder-slate-600 transition-all" />
+            </div>
+            <div>
+              <label for="message" class="text-xs font-medium text-slate-400 mb-2 block">Message</label>
+              <textarea id="message" name="message" rows="5" required placeholder="Tell me about your project..."
+                class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm text-slate-200 placeholder-slate-600 transition-all resize-none"></textarea>
+            </div>
+            <button type="submit" id="submitBtn"
+              class="w-full bg-white text-gray-950 text-sm font-semibold px-8 py-3.5 rounded-full hover:bg-slate-200 transition-colors shadow-lg shadow-white/5 flex items-center justify-center gap-2">
+              <i data-lucide="send" class="w-4 h-4"></i>
+              <span>Send Message</span>
+            </button>
+            <!-- Success Message -->
+            <div id="formSuccess" class="hidden text-center py-3">
+              <div class="inline-flex items-center gap-2 bg-emerald-500/10 border border-emerald-500/20 rounded-full px-5 py-2">
+                <i data-lucide="check-circle" class="w-4 h-4 text-emerald-400"></i>
+                <span class="text-sm text-emerald-400 font-medium">Message sent successfully!</span>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer class="relative border-t border-white/5 py-12">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+        <!-- Copyright -->
+        <div class="text-center md:text-left">
+          <p class="text-sm text-slate-500">
+            © <span id="currentYear"></span> <span class="text-gradient font-medium">Tuhin Mitra</span>. All rights reserved.
+          </p>
+        </div>
+
+        <!-- Social Icons -->
+        <div class="flex items-center gap-4">
+          <a href="#" class="w-9 h-9 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center hover:bg-indigo-500/10 hover:border-indigo-500/20 transition-all" title="GitHub">
+            <i data-lucide="github" class="w-4 h-4 text-slate-500 hover:text-slate-300"></i>
+          </a>
+          <a href="#" class="w-9 h-9 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center hover:bg-indigo-500/10 hover:border-indigo-500/20 transition-all" title="LinkedIn">
+            <i data-lucide="linkedin" class="w-4 h-4 text-slate-500 hover:text-slate-300"></i>
+          </a>
+          <a href="#" class="w-9 h-9 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center hover:bg-indigo-500/10 hover:border-indigo-500/20 transition-all" title="Twitter">
+            <i data-lucide="twitter" class="w-4 h-4 text-slate-500 hover:text-slate-300"></i>
+          </a>
+          <a href="mailto:tuhin.mitra@example.com" class="w-9 h-9 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center hover:bg-indigo-500/10 hover:border-indigo-500/20 transition-all" title="Email">
+            <i data-lucide="mail" class="w-4 h-4 text-slate-500 hover:text-slate-300"></i>
+          </a>
+        </div>
+
+        <!-- Built with -->
+        <div class="text-center md:text-right">
+          <p class="text-xs text-slate-600">Built with HTML, Tailwind CSS & Vanilla JS</p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+
+  <!-- ===================== BACK TO TOP BUTTON ===================== -->
+  <button id="backToTop" class="back-to-top fixed bottom-8 right-8 z-50 w-12 h-12 rounded-full bg-indigo-500/20 border border-indigo-500/30 backdrop-blur-sm flex items-center justify-center hover:bg-indigo-500/30 transition-all" aria-label="Back to top">
+    <i data-lucide="arrow-up" class="w-5 h-5 text-indigo-400"></i>
+  </button>
+
+
+  <!-- ===================== JAVASCRIPT ===================== -->
+  <script>
+    // Initialize Lucide Icons
+    lucide.createIcons();
+
+    // ===== Current Year =====
+    document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+    // ===== Sticky Navbar =====
+    const navbar = document.getElementById('navbar');
+    let lastScrollY = 0;
+
+    window.addEventListener('scroll', () => {
+      const currentScrollY = window.scrollY;
+
+      if (currentScrollY > 50) {
+        navbar.classList.add('glass-panel');
+        navbar.style.borderBottom = '1px solid rgba(255,255,255,0.05)';
+      } else {
+        navbar.classList.remove('glass-panel');
+        navbar.style.borderBottom = 'none';
+      }
+
+      lastScrollY = currentScrollY;
+    });
+
+    // ===== Mobile Menu Toggle =====
+    const menuToggle = document.getElementById('menuToggle');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const bar1 = document.getElementById('bar1');
+    const bar2 = document.getElementById('bar2');
+    const bar3 = document.getElementById('bar3');
+    let menuOpen = false;
+
+    menuToggle.addEventListener('click', () => {
+      menuOpen = !menuOpen;
+      mobileMenu.classList.toggle('open', menuOpen);
+
+      if (menuOpen) {
+        bar1.style.transform = 'rotate(45deg) translate(4px, 4px)';
+        bar2.style.opacity = '0';
+        bar3.style.transform = 'rotate(-45deg) translate(4px, -4px)';
+      } else {
+        bar1.style.transform = 'none';
+        bar2.style.opacity = '1';
+        bar3.style.transform = 'none';
+      }
+    });
+
+    // Close mobile menu on link click
+    document.querySelectorAll('.mobile-link').forEach(link => {
+      link.addEventListener('click', () => {
+        menuOpen = false;
+        mobileMenu.classList.remove('open');
+        bar1.style.transform = 'none';
+        bar2.style.opacity = '1';
+        bar3.style.transform = 'none';
+      });
+    });
+
+    // ===== Active Nav Link on Scroll =====
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.nav-link');
+
+    function updateActiveNav() {
+      const scrollY = window.scrollY + 100;
+
+      sections.forEach(section => {
+        const sectionTop = section.offsetTop;
+        const sectionHeight = section.offsetHeight;
+        const sectionId = section.getAttribute('id');
+
+        if (scrollY >= sectionTop && scrollY < sectionTop + sectionHeight) {
+          navLinks.forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('href') === `#${sectionId}`) {
+              link.classList.add('active');
+            }
+          });
+        }
+      });
+    }
+
+    window.addEventListener('scroll', updateActiveNav);
+
+    // ===== Scroll Reveal Animation =====
+    const revealElements = document.querySelectorAll('.reveal');
+
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('active');
+
+          // Trigger progress bar animation inside this element
+          const progressBars = entry.target.querySelectorAll('.progress-fill');
+          progressBars.forEach(bar => bar.classList.add('animated'));
+        }
+      });
+    }, {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    });
+
+    revealElements.forEach(el => revealObserver.observe(el));
+
+    // Also observe skill card parent for progress bars
+    const skillSection = document.getElementById('skills');
+    const skillObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          document.querySelectorAll('.progress-fill').forEach(bar => {
+            bar.classList.add('animated');
+          });
+        }
+      });
+    }, { threshold: 0.2 });
+    skillObserver.observe(skillSection);
+
+    // ===== Back to Top Button =====
+    const backToTop = document.getElementById('backToTop');
+
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 500) {
+        backToTop.classList.add('visible');
+      } else {
+        backToTop.classList.remove('visible');
+      }
+    });
+
+    backToTop.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // ===== Contact Form (Frontend Only) =====
+    const contactForm = document.getElementById('contactForm');
+    const formSuccess = document.getElementById('formSuccess');
+    const submitBtn = document.getElementById('submitBtn');
+
+    contactForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      // Simulate sending
+      submitBtn.innerHTML = '<span class="animate-pulse">Sending...</span>';
+      submitBtn.disabled = true;
+
+      setTimeout(() => {
+        contactForm.reset();
+        submitBtn.innerHTML = '<i data-lucide="send" class="w-4 h-4"></i><span>Send Message</span>';
+        submitBtn.disabled = false;
+        formSuccess.classList.remove('hidden');
+        lucide.createIcons();
+
+        // Hide success message after 4 seconds
+        setTimeout(() => {
+          formSuccess.classList.add('hidden');
+        }, 4000);
+      }, 1500);
+    });
+
+    // ===== Smooth scroll offset for fixed nav =====
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        const targetId = this.getAttribute('href');
+        if (targetId === '#') return;
+
+        const targetElement = document.querySelector(targetId);
+        if (targetElement) {
+          e.preventDefault();
+          const navHeight = 80;
+          const targetPosition = targetElement.offsetTop - navHeight;
+
+          window.scrollTo({
+            top: targetPosition,
+            behavior: 'smooth'
+          });
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>
